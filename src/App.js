@@ -5,7 +5,13 @@ import TodoList from './components/TodoList';
 
 function App() {
   return (
-    <div className="container p-5 mt-4" style={{backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
+    <div
+      className="container p-5 mt-4"
+      style={{
+        borderRadius: '0.2rem',
+        boxShadow: '0.1rem 0.1rem 0.4rem #aaaaaa',
+      }}
+    >
       <h1> What's the Plan for Today </h1>
 
       <AddTodoForm />
