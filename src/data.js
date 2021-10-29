@@ -37,6 +37,12 @@ const List = {
   saveList: (list) => {
     localStorage.setItem('theList', JSON.stringify(list));
   },
+  removeList: (key) => {
+    localStorage.removeItem(key);
+  },
+  removeAllList: () => {
+    localStorage.clear();
+  }
 };
 
 export default List;

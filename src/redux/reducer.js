@@ -1,21 +1,62 @@
 import { createSlice } from "@reduxjs/toolkit";
+import List from '../data';
 
-const initialState = [];
 
-const addTodoReducer = createSlice({
+
+const todoSlice  = createSlice({
   name: "todos",
-  initialState,
+  initialState: [
+    // {
+    //     id: 1,
+    //     title: 'todo1',
+    //     description: 'body1',
+    //     completed: true,
+    //     dueDate: 'Nov 1st',
+    //   },
+    //   {
+    //     id: 2,
+    //     title: 'todo2',
+    //     description: 'body2',
+    //     completed: true,
+    //     dueDate: 'Nov 2st',
+    //   },
+    //   {
+    //     id: 3,
+    //     title: 'todo5',
+    //     description: 'body3',
+    //     completed: false,
+    //     // status: {
+    //     //   todo: true,
+    //     //   inProgress: false,
+    //     //   completed: false,
+    //     // },
+    //     dueDate: 'Nov 3st',
+    //   },
+  ],
   reducers: {
-
+    addAll: (state, action) => {
+      const todos = action.payload;
+      state.push(...todos);
+    },
     //Adding todos
     addTodos: (state, action) => {
-      state.push(action.payload);
-      return state;
+        const todo = {
+            id: action.payload.id,
+            title: action.payload.title,
+            description: action.payload.description,
+            completed: action.payload.completed,
+            dueDate: action.payload.dueDate,
+        };
+        state.push(todo);
+        let todos = List.getList();
+        todos.push(todo);
+        List.saveList(todos);
     },
     //remove todos
-    // removeTodos: (state, action) => {
-    //   return state.filter((item) => item.id !== action.payload);
-    // },
+    removeTodos: (state, action) => {
+      return state.filter((item) => item.id !== action.payload.id);
+    },
+
 
     // //update todos
     // updateTodos: (state, action) => {
@@ -45,9 +86,11 @@ const addTodoReducer = createSlice({
 });
 
 export const {
+  addAll,
   addTodos,
-//   removeTodos,
+  removeTodos,
 //   updateTodos,
 //   completeTodos,
-} = addTodoReducer.actions;
-export const reducer = addTodoReducer.reducer;
+} = todoSlice.actions;
+
+export default todoSlice.reducer;

@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import { addTodos } from '../redux/reducer';
+import { useDispatch } from 'react-redux';
+import List from '../data';
 
 const AddTodoForm = (props) => {
   const [todoTitle, setTodoTitle] = useState('');
   const [todoBody, setTodoBody] = useState('');
   const [todoDue, setTodoDue] = useState('');
+  const dispatch = useDispatch();
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (todoTitle === '') {
       alert('Input is Empty');
     } else {
-      props.addTodo({
-        id: Math.floor(Math.random() * 1000),
-        title: todoTitle,
-        description: todoBody,
-        completed: false,
-        dueDate: todoDue,
-      });
+      dispatch(
+				addTodos({
+					id: Math.floor(Math.random() * 1000),
+          title: todoTitle,
+          description: todoBody,
+          completed: false,
+          dueDate: todoDue,
+				})
+			);
+
       setTodoTitle('');
       setTodoBody('');
       setTodoDue('');
@@ -30,7 +36,6 @@ const AddTodoForm = (props) => {
     // TODO
   };
 
-  console.log('props from store', props);
 
 
   return (
@@ -70,24 +75,14 @@ const AddTodoForm = (props) => {
           style={{ height: '80px' }}
         ></input>
 
-        <button onClick={() => handleSubmit()} className="btn btn-primary mb-2">
+        <button onClick={handleSubmit} className="btn btn-primary mb-2">
           Submit
         </button>
 
     </div>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    todos: state,
-  };
-};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addTodo: (obj) => dispatch(addTodos(obj)),
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTodoForm);
+export default AddTodoForm;
 // export default AddTodoForm;

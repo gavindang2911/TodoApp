@@ -15,8 +15,8 @@ function App() {
       <h1> What's the Plan for Today </h1>
 
       <AddTodoForm />
-      <TodoItem />
       <TodoList />
+      <TodoItem />
     </div>
   );
 }

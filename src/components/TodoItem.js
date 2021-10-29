@@ -1,6 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { removeTodos } from '../redux/reducer';
 
 const TodoItem = ({ id, title, status, description, dueDate }) => {
+  const dispatch = useDispatch();
+  const handleDeleteClick = () => {
+    dispatch(removeTodos({ id: id }));
+  };
   return (
     <li
       className={`list-group-item ${
@@ -10,13 +16,16 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
       <div className="d-flex justify-content-between">
         <span className=" align-items-center">{title}</span>
         <div>
-          <button className="btn btn-primary" style={{ marginRight:"10px" }}>Done</button>
-          <button className="btn btn-danger">Delete</button>
+          <button className="btn btn-primary" style={{ marginRight: '10px' }}>
+            Done
+          </button>
+          <button className="btn btn-danger" onClick={handleDeleteClick}>
+            Delete
+          </button>
         </div>
       </div>
 
-        <span>{description}</span>
-
+      <span>{description}</span>
     </li>
   );
 };
