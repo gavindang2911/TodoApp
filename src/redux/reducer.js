@@ -1,39 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import List from '../data';
-import { useSelector } from 'react-redux';
 
 
 
 const todoSlice  = createSlice({
   name: "todos",
-  initialState: [
-    // {
-    //     id: 1,
-    //     title: 'todo1',
-    //     description: 'body1',
-    //     completed: true,
-    //     dueDate: 'Nov 1st',
-    //   },
-    //   {
-    //     id: 2,
-    //     title: 'todo2',
-    //     description: 'body2',
-    //     completed: true,
-    //     dueDate: 'Nov 2st',
-    //   },
-    //   {
-    //     id: 3,
-    //     title: 'todo5',
-    //     description: 'body3',
-    //     completed: false,
-    //     // status: {
-    //     //   todo: true,
-    //     //   inProgress: false,
-    //     //   completed: false,
-    //     // },
-    //     dueDate: 'Nov 3st',
-    //   },
-  ],
+  initialState: [],
   reducers: {
     addAll: (state, action) => {
       const todos = action.payload;
@@ -56,36 +28,49 @@ const todoSlice  = createSlice({
     },
     //remove todos
     removeTodos: (state, action) => {
-      // List.removeList(stnewState);
       List.saveList(state.filter((item) => item.id !== action.payload.id));
       return state.filter((item) => item.id !== action.payload.id);
     },
 
 
-    // //update todos
-    // updateTodos: (state, action) => {
-    //   return state.map((todo) => {
-    //     if (todo.id === action.payload.id) {
-    //       return {
-    //         ...todo,
-    //         item: action.payload.item,
-    //       };
-    //     }
-    //     return todo;
-    //   });
-    // },
+    //update todos
+    updateTodos: (state, action) => {
+      List.saveList(state.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return action.payload.todo;
+        }
+        return todo;
+      }));
+      return state.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return action.payload.todo;
+        }
+        return todo;
+      });
+    },
+
     // //completed
-    // completeTodos: (state, action) => {
-    //   return state.map((todo) => {
-    //     if (todo.id === action.payload) {
-    //       return {
-    //         ...todo,
-    //         completed: true,
-    //       };
-    //     }
-    //     return todo;
-    //   });
-    // },
+    completeTodos: (state, action) => {
+      List.saveList(state.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return {
+            ...todo,
+            completed: action.payload.completed,
+          };
+        }
+        return todo;
+      }));
+      return state.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return {
+            ...todo,
+            completed: action.payload.completed,
+          };
+        }
+        return todo;
+      });
+
+    },
   },
 });
 
@@ -93,8 +78,8 @@ export const {
   addAll,
   addTodos,
   removeTodos,
-//   updateTodos,
-//   completeTodos,
+  updateTodos,
+  completeTodos,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
