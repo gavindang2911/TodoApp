@@ -1,5 +1,6 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import List from '../data';
 import { removeTodos } from '../redux/reducer';
 
 const TodoItem = ({ id, title, status, description, dueDate }) => {
@@ -7,6 +8,8 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
   const handleDeleteClick = () => {
     dispatch(removeTodos({ id: id }));
   };
+
+
   return (
     <li
       className={`list-group-item ${

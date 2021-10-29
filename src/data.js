@@ -31,7 +31,7 @@ const List = {
     return (
       (localStorage.getItem('theList') &&
         JSON.parse(localStorage.getItem('theList'))) ||
-      this.list
+      []
     );
   },
   saveList: (list) => {

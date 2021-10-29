@@ -7,19 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addAll } from '../redux/reducer';
 
 const TodoList = () => {
-  const todoList = List.getList();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(addAll(todoList));
-    console.log('asdf')
-  }, [])
   const todos = useSelector((state) => state.todos);
 
-  // const [todos, setTodos] = useState(List.getList()); // 3
-  // useEffect(() => {
-  //   List.getList()
-  // }, [todos]);
 
   return (
     <div>

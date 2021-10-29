@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import List from '../data';
+import { useSelector } from 'react-redux';
 
 
 
@@ -51,9 +52,12 @@ const todoSlice  = createSlice({
         let todos = List.getList();
         todos.push(todo);
         List.saveList(todos);
+        return state;
     },
     //remove todos
     removeTodos: (state, action) => {
+      // List.removeList(stnewState);
+      List.saveList(state.filter((item) => item.id !== action.payload.id));
       return state.filter((item) => item.id !== action.payload.id);
     },
 
