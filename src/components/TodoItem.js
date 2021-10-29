@@ -23,7 +23,6 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
   };
 
   const update = (e) => {
-    //here 13 is key code for enter key
 
     if (e.which === 13) {
       e.preventDefault();
