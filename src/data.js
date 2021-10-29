@@ -11,7 +11,7 @@ const List = {
       id: 2,
       title: 'todo2',
       description: 'body2',
-      completed: false,
+      completed: true,
       dueDate: 'Nov 2st',
     },
     {

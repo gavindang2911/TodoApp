@@ -8,15 +8,15 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
       } mb-3 mr-sm-2`}
     >
       <div className="d-flex justify-content-between">
-        <span className="d-flex align-items-center">
-          <input type="checkbox" className="mr-3" checked={status}></input>
-          {title}
-        </span>
-        <button className="btn btn-danger">Delete</button>
+        <span className=" align-items-center">{title}</span>
+        <div>
+          <button className="btn btn-primary" style={{ marginRight:"10px" }}>Done</button>
+          <button className="btn btn-danger">Delete</button>
+        </div>
       </div>
-      <div className="d-flex justify-content-between">
+
         <span>{description}</span>
-      </div>
+
     </li>
   );
 };

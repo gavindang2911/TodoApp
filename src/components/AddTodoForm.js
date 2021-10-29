@@ -1,41 +1,93 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { addTodos } from '../redux/reducer';
 
-const AddTodoForm = () => {
-    const [todoTitle, setTodoTitle] = useState('');
-    const [todoBody, setTodoBody] = useState('');
+const AddTodoForm = (props) => {
+  const [todoTitle, setTodoTitle] = useState('');
+  const [todoBody, setTodoBody] = useState('');
+  const [todoDue, setTodoDue] = useState('');
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setTodoTitle([...todoTitle, {title: todoTitle, complete: false}])
-        setTodoBody([...todoBody, {body: todoBody, complete: false}])
-        console.log(todoTitle);
-        console.log(todoBody);
-        // TODO
+  const handleSubmit = () => {
+    if (todoTitle === '') {
+      alert('Input is Empty');
+    } else {
+      props.addTodo({
+        id: Math.floor(Math.random() * 1000),
+        title: todoTitle,
+        description: todoBody,
+        completed: false,
+        dueDate: todoDue,
+      });
+      setTodoTitle('');
+      setTodoBody('');
+      setTodoDue('');
     }
+    // event.preventDefault();
+    // setTodoTitle([...todoTitle, { title: todoTitle, complete: false }]);
+    // setTodoBody([...todoBody, { body: todoBody, complete: false }]);
+    // console.log(todoTitle);
+    // console.log(todoBody);
+    // TODO
+  };
 
-    return (
-        <form onSubmit={handleSubmit} autoComplete="off" >
-			<input
-				type='text'
-				className='form-control mb-3 mr-sm-3'
-				placeholder='Add todo title...'
-				value={todoTitle}
-				onChange={(event) => setTodoTitle(event.target.value)}
-			></input>
-			<input
-				type='text'
-				className='form-control mb-2 mr-sm-2 '
-				placeholder='Add todo description...'
-				value={todoBody}
-				onChange={(event) => setTodoBody(event.target.value)}
-                style={{height: "80px"}}
-			></input>
+  console.log('props from store', props);
 
-			<button type='submit' className='btn btn-primary mb-2'>
-				Submit
-			</button>
-        </form>
-    )
-}
 
-export default AddTodoForm
+  return (
+    <div
+      style={{
+        borderRadius: '0.2rem',
+        backgroundColor: '#ddd',
+        padding: '20px',
+        boxShadow: '0.1rem 0.1rem 0.4rem #aaaaaa',
+      }}
+    >
+
+        <div style={{ display: 'flex', height: '50px' }}>
+          <input
+            type="text"
+            className="form-control mb-3 mr-sm-3"
+            placeholder="Add todo title..."
+            value={todoTitle}
+            onChange={(event) => setTodoTitle(event.target.value)}
+          ></input>
+          <span style={{ margin: '62px' }}></span>
+          <input
+            type="text"
+            className="form-control mb-3 mr-sm-3"
+            placeholder="Add due date..."
+            value={todoDue}
+            onChange={(event) => setTodoDue(event.target.value)}
+          ></input>
+        </div>
+
+        <input
+          type="text"
+          className="form-control mb-2 mr-sm-2 "
+          placeholder="Add todo description..."
+          value={todoBody}
+          onChange={(event) => setTodoBody(event.target.value)}
+          style={{ height: '80px' }}
+        ></input>
+
+        <button onClick={() => handleSubmit()} className="btn btn-primary mb-2">
+          Submit
+        </button>
+
+    </div>
+  );
+};
+const mapStateToProps = (state) => {
+  return {
+    todos: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTodo: (obj) => dispatch(addTodos(obj)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTodoForm);
+// export default AddTodoForm;
