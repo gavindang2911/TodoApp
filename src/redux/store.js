@@ -5,6 +5,6 @@ import filterReducer from './filterReducer';
 export default configureStore({
   reducer: {
     todos: todoReducer,
-	filter: filterReducer,
+	  filters: filterReducer,
   },
 });

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import List from '../data';
-import { removeTodos, completeTodos, updateTodos, inProgressSelected } from '../redux/reducer';
+import List from '../../data';
+import { removeTodos, completeTodos, updateTodos, inProgressSelected } from '../../redux/reducer';
 
 const availableStatus = ['Todo', 'In Progress', 'Done'];
 
@@ -38,13 +38,10 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
       dispatch(updateTodos({ id: id, todo: todo }));
   };
   const handleStatusChanged = (e) => {
-    const inProgress = e.target.value
-    // dispatch({
-    //   type: 'todos/colorSelected',
-    //   payload: { todoId: todo.id, color },
-    // })
+    const inProgress = e.target.value;
     dispatch(inProgressSelected({ id: id, inProgress: inProgress }));
   }
+
   const statusOptions = availableStatus.map((status) => (
     <option key={status} value={status}>
       {status}
