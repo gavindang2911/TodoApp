@@ -18,6 +18,11 @@ const todoSlice  = createSlice({
       const initialState= [];
       return initialState;
     },
+    deleteAllLocalStorage: () => {
+      const initialState= [];
+      List.removeAllList();
+      return initialState;
+    },
     //Adding todos
     addTodos: (state, action) => {
         const todo = {
@@ -55,6 +60,8 @@ const todoSlice  = createSlice({
         return todo;
       });
     },
+    // all completed
+
 
     // //completed
     completeTodos: (state, action) => {
@@ -102,7 +109,7 @@ export const {
   removeTodos,
   updateTodos,
   completeTodos,
-  // inProgressSelected,
+  deleteAllLocalStorage,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

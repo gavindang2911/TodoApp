@@ -15,7 +15,7 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
     status: status,
     dueDate: dueDate,
   });
-  console.log(todo);
+
 
   const handleDeleteClick = () => {
     dispatch(removeTodos({ id: id }));
