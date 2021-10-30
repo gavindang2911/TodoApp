@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import List from '../../data';
 import { removeTodos, completeTodos, updateTodos, inProgressSelected } from '../../redux/reducer';
 
-const availableStatus = ['Todo', 'In Progress', 'Done'];
+const availableStatus = ['To do', 'In Progress', 'Completed'];
 
 const TodoItem = ({ id, title, status, description, dueDate }) => {
   const dispatch = useDispatch();
@@ -12,18 +12,18 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
     id: id,
     title: title,
     description: description,
-    completed: status,
+    status: status,
     dueDate: dueDate,
-    inProgress:null,
   });
+  console.log(todo);
 
   const handleDeleteClick = () => {
     dispatch(removeTodos({ id: id }));
   };
 
-  const handleCompleClick = () => {
-    dispatch(completeTodos({ id, completed: !status }));
-  };
+  // const handleCompleClick = () => {
+  //   dispatch(completeTodos({ id, status: 'Completed' }));
+  // };
 
   const update = () => {
 
@@ -38,8 +38,9 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
       dispatch(updateTodos({ id: id, todo: todo }));
   };
   const handleStatusChanged = (e) => {
-    const inProgress = e.target.value;
-    dispatch(inProgressSelected({ id: id, inProgress: inProgress }));
+    const status = e.target.value;
+    setTodo({...todo, status: status})
+    dispatch(updateTodos({ id: id, todo: {...todo, status: status }}));
   }
 
   const statusOptions = availableStatus.map((status) => (
@@ -49,10 +50,9 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
   ))
 
   return (
+    //zsffffffffffffffffffffffffffffffffffffffffffffffffff
     <li
-      className={`list-group-item ${
-        status && 'list-group-item-success'
-      } mb-3 mr-sm-2`}
+      className={`list-group-item ${status==='In Progress' ?'list-group-item-primary':''}${status==='Completed' ? 'list-group-item-success':''} mb-3 mr-sm-2`}
     >
       <div className="d-flex justify-content-between">
         <textarea
@@ -83,12 +83,12 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
 
         <div>
           <select
-            className="colorPicker"
-            value={todo.inProgress}
+            value={todo.status}
             // style={{ color }}
             onChange={handleStatusChanged}
+            style={{ marginRight: '10px' }}
           >
-            <option value=""></option>
+            {/* <option value=""></option> */}
             {statusOptions}
           </select>
           <button
@@ -98,13 +98,13 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
           >
             Update
           </button>
-          <button
+          {/* <button
             className="btn btn-primary"
             style={{ marginRight: '10px' }}
             onClick={handleCompleClick}
           >
             Done
-          </button>
+          </button> */}
           <button className="btn btn-danger" onClick={handleDeleteClick}>
             Delete
           </button>

@@ -24,7 +24,7 @@ const todoSlice  = createSlice({
             id: action.payload.id,
             title: action.payload.title,
             description: action.payload.description,
-            completed: action.payload.completed,
+            status: action.payload.status,
             dueDate: action.payload.dueDate,
         };
         state.push(todo);
@@ -62,7 +62,7 @@ const todoSlice  = createSlice({
         if (todo.id === action.payload.id) {
           return {
             ...todo,
-            completed: action.payload.completed,
+            status: action.payload.status,
           };
         }
         return todo;
@@ -71,27 +71,27 @@ const todoSlice  = createSlice({
         if (todo.id === action.payload.id) {
           return {
             ...todo,
-            completed: action.payload.completed,
+            status: action.payload.status,
           };
         }
         return todo;
       });
     },
 
-    inProgressSelected: (state, action) => {
-      const { inProgress, todoId } = action.payload
-      // const inProgress = action.payload.inProgress
-      // const id = action.payload.id
-      return state.map((todo) => {
-        if (todo.id !== todoId) {
-          return todo
-        }
-        return {
-          ...todo,
-          inProgress,
-        }
-      })
-    }
+    // inProgressSelected: (state, action) => {
+    //   const { inProgress, todoId } = action.payload
+    //   // const inProgress = action.payload.inProgress
+    //   // const id = action.payload.id
+    //   return state.map((todo) => {
+    //     if (todo.id !== todoId) {
+    //       return todo
+    //     }
+    //     return {
+    //       ...todo,
+    //       inProgress,
+    //     }
+    //   })
+    // }
   },
 });
 
@@ -102,7 +102,7 @@ export const {
   removeTodos,
   updateTodos,
   completeTodos,
-  inProgressSelected,
+  // inProgressSelected,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

@@ -19,7 +19,7 @@ const AddTodoForm = (props) => {
 					id: Math.floor(Math.random() * 1000),
           title: todoTitle,
           description: todoBody,
-          completed: false,
+          status: 'To do',
           dueDate: todoDue,
 				})
 			);

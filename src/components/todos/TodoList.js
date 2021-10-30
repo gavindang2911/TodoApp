@@ -55,7 +55,7 @@ const TodoList = () => {
                               id={todo.id}
                               title={todo.title}
                               description={todo.description}
-                              status={todo.completed}
+                              status={todo.status}
                               dueDate={todo.dueDate}
                             />
                           </div>
@@ -67,7 +67,7 @@ const TodoList = () => {
                   {todos.length > 0 && filters.status == "active"
                   ? todos.map((todo, i) => {
                     return (
-                      todo.completed === false &&
+                      todo.status === 'To do' &&
                       <Draggable
                         key={todo.id}
                         draggableId={'draggable-' + todo.id}
@@ -89,7 +89,7 @@ const TodoList = () => {
                               id={todo.id}
                               title={todo.title}
                               description={todo.description}
-                              status={todo.completed}
+                              status={todo.status}
                               dueDate={todo.dueDate}
                             />
                           </div>
@@ -101,7 +101,7 @@ const TodoList = () => {
                   {todos.length > 0 && filters.status == "completed"
                   ? todos.map((todo, i) => {
                     return (
-                      todo.completed === true &&
+                      todo.status === 'Completed' &&
                       <Draggable
                         key={todo.id}
                         draggableId={'draggable-' + todo.id}
@@ -123,7 +123,41 @@ const TodoList = () => {
                               id={todo.id}
                               title={todo.title}
                               description={todo.description}
-                              status={todo.completed}
+                              status={todo.status}
+                              dueDate={todo.dueDate}
+                            />
+                          </div>
+                        )}
+                      </Draggable>
+                    )
+                  })
+                  : null}
+                  {todos.length > 0 && filters.status == "inprogress"
+                  ? todos.map((todo, i) => {
+                    return (
+                      todo.status === 'In Progress' &&
+                      <Draggable
+                        key={todo.id}
+                        draggableId={'draggable-' + todo.id}
+                        index={i}
+                      >
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            style={{
+                              ...provided.draggableProps.style,
+                              boxShadow: snapshot.isDragging
+                                ? '0 0 .4rem #666'
+                                : 'none',
+                            }}
+                          >
+                            <DragHandle {...provided.dragHandleProps} />
+                            <TodoItem
+                              id={todo.id}
+                              title={todo.title}
+                              description={todo.description}
+                              status={todo.status}
                               dueDate={todo.dueDate}
                             />
                           </div>
