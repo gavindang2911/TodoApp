@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import List from '../data';
 
 
@@ -8,8 +9,14 @@ const todoSlice  = createSlice({
   initialState: [],
   reducers: {
     addAll: (state, action) => {
+      // const init = [];
+      // state = undefined;
       const todos = action.payload;
       state.push(...todos);
+    },
+    deleteAll: () => {
+      const initialState= [];
+      return initialState;
     },
     //Adding todos
     addTodos: (state, action) => {
@@ -69,17 +76,33 @@ const todoSlice  = createSlice({
         }
         return todo;
       });
-
     },
+
+    inProgressSelected: (state, action) => {
+      const { inProgress, todoId } = action.payload
+      // const inProgress = action.payload.inProgress
+      // const id = action.payload.id
+      return state.map((todo) => {
+        if (todo.id !== todoId) {
+          return todo
+        }
+        return {
+          ...todo,
+          inProgress,
+        }
+      })
+    }
   },
 });
 
 export const {
   addAll,
+  deleteAll,
   addTodos,
   removeTodos,
   updateTodos,
   completeTodos,
+  inProgressSelected,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

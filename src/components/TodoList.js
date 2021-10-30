@@ -4,25 +4,26 @@ import List from '../data';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DragHandle from './DragHandle';
 import { useSelector, useDispatch } from 'react-redux';
-import { addAll } from '../redux/reducer';
+import { addAll, deleteAll } from '../redux/reducer';
 
 const TodoList = () => {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos);
 
+  const handleOnDragEnd = (param) => {
+    const items = Array.from(todos);
+    const [reoderedItem] = items.splice(param.source.index, 1);
+    items.splice(param.destination.index, 0, reoderedItem);
+    List.saveList(items);
+    dispatch(deleteAll());
+    dispatch(addAll(List.getList()));
+  }
 
 
   return (
     <div>
       <DragDropContext
-        onDragEnd={(param) => {
-          const srcI = param.source.index;
-          const desI = param.destination?.index;
-          if (desI) {
-            todos.splice(desI, 0, todos.splice(srcI, 1)[0]);
-            List.saveList(todos);
-          }
-        }}
+        onDragEnd={param => handleOnDragEnd(param)}
       >
         <ul className="list-group">
           <Droppable droppableId="droppable-1">

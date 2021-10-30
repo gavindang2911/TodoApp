@@ -13,6 +13,7 @@ const List = {
       description: 'body2',
       completed: true,
       dueDate: 'Nov 2st',
+      inProgress: 'true',
     },
     {
       id: 3,

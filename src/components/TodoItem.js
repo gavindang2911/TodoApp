@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import List from '../data';
-import { removeTodos, completeTodos, updateTodos } from '../redux/reducer';
+import { removeTodos, completeTodos, updateTodos, inProgressSelected } from '../redux/reducer';
+
+const availableStatus = ['Todo', 'In Progress', 'Done'];
 
 const TodoItem = ({ id, title, status, description, dueDate }) => {
   const dispatch = useDispatch();
@@ -12,6 +14,7 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
     description: description,
     completed: status,
     dueDate: dueDate,
+    inProgress:null,
   });
 
   const handleDeleteClick = () => {
@@ -22,15 +25,31 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
     dispatch(completeTodos({ id, completed: !status }));
   };
 
-  const update = (e) => {
+  const update = () => {
 
-    if (e.which === 13) {
-      e.preventDefault();
-      //here 13 is key code for enter key
-      setIsDisabled(!isDisabled);
+    // if (e.which === 13) {
+    //   e.preventDefault();
+    //   //here 13 is key code for enter key
+    //   setIsDisabled(!isDisabled);
+    //   dispatch(updateTodos({ id: id, todo: todo }));
+
+    // }
+    // setIsDisabled(!isDisabled);
       dispatch(updateTodos({ id: id, todo: todo }));
-    }
   };
+  const handleStatusChanged = (e) => {
+    const inProgress = e.target.value
+    // dispatch({
+    //   type: 'todos/colorSelected',
+    //   payload: { todoId: todo.id, color },
+    // })
+    dispatch(inProgressSelected({ id: id, inProgress: inProgress }));
+  }
+  const statusOptions = availableStatus.map((status) => (
+    <option key={status} value={status}>
+      {status}
+    </option>
+  ))
 
   return (
     <li
@@ -49,7 +68,7 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
               title: event.target.value,
             })
           }
-          onKeyPress={(e) => update(e)}
+          // onKeyPress={(e) => update(e)}
         />
         {/* <textarea style={{ border:"none" }}>{title}</textarea> */}
         <textarea
@@ -62,10 +81,26 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
               description: event.target.value,
             })
           }
-          onKeyPress={(e) => update(e)}
+          // onKeyPress={(e) => update(e)}
         />
 
         <div>
+          <select
+            className="colorPicker"
+            value={todo.inProgress}
+            // style={{ color }}
+            onChange={handleStatusChanged}
+          >
+            <option value=""></option>
+            {statusOptions}
+          </select>
+          <button
+            className="btn btn-primary"
+            style={{ marginRight: '10px' }}
+            onClick={update}
+          >
+            Update
+          </button>
           <button
             className="btn btn-primary"
             style={{ marginRight: '10px' }}
