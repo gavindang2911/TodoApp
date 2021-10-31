@@ -1,11 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 import List from '../data';
 
-
-
-const todoSlice  = createSlice({
-  name: "todos",
+const todoSlice = createSlice({
+  name: 'todos',
   initialState: [],
   reducers: {
     addAll: (state, action) => {
@@ -15,28 +13,28 @@ const todoSlice  = createSlice({
       state.push(...todos);
     },
     deleteAll: () => {
-      const initialState= [];
+      const initialState = [];
       return initialState;
     },
     deleteAllLocalStorage: () => {
-      const initialState= [];
+      const initialState = [];
       List.removeAllList();
       return initialState;
     },
     //Adding todos
     addTodos: (state, action) => {
-        const todo = {
-            id: action.payload.id,
-            title: action.payload.title,
-            description: action.payload.description,
-            status: action.payload.status,
-            dueDate: action.payload.dueDate,
-        };
-        state.push(todo);
-        let todos = List.getList();
-        todos.push(todo);
-        List.saveList(todos);
-        return state;
+      const todo = {
+        id: action.payload.id,
+        title: action.payload.title,
+        description: action.payload.description,
+        status: action.payload.status,
+        dueDate: action.payload.dueDate,
+      };
+      state.push(todo);
+      let todos = List.getList();
+      todos.push(todo);
+      List.saveList(todos);
+      return state;
     },
     //remove todos
     removeTodos: (state, action) => {
@@ -44,15 +42,16 @@ const todoSlice  = createSlice({
       return state.filter((item) => item.id !== action.payload.id);
     },
 
-
     //update todos
     updateTodos: (state, action) => {
-      List.saveList(state.map((todo) => {
-        if (todo.id === action.payload.id) {
-          return action.payload.todo;
-        }
-        return todo;
-      }));
+      List.saveList(
+        state.map((todo) => {
+          if (todo.id === action.payload.id) {
+            return action.payload.todo;
+          }
+          return todo;
+        })
+      );
       return state.map((todo) => {
         if (todo.id === action.payload.id) {
           return action.payload.todo;
@@ -62,18 +61,19 @@ const todoSlice  = createSlice({
     },
     // all completed
 
-
     // //completed
     completeTodos: (state, action) => {
-      List.saveList(state.map((todo) => {
-        if (todo.id === action.payload.id) {
-          return {
-            ...todo,
-            status: action.payload.status,
-          };
-        }
-        return todo;
-      }));
+      List.saveList(
+        state.map((todo) => {
+          if (todo.id === action.payload.id) {
+            return {
+              ...todo,
+              status: action.payload.status,
+            };
+          }
+          return todo;
+        })
+      );
       return state.map((todo) => {
         if (todo.id === action.payload.id) {
           return {
@@ -84,21 +84,6 @@ const todoSlice  = createSlice({
         return todo;
       });
     },
-
-    // inProgressSelected: (state, action) => {
-    //   const { inProgress, todoId } = action.payload
-    //   // const inProgress = action.payload.inProgress
-    //   // const id = action.payload.id
-    //   return state.map((todo) => {
-    //     if (todo.id !== todoId) {
-    //       return todo
-    //     }
-    //     return {
-    //       ...todo,
-    //       inProgress,
-    //     }
-    //   })
-    // }
   },
 });
 

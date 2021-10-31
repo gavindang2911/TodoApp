@@ -16,9 +16,8 @@ const RemainingTodos = ({ count }) => {
 };
 
 const StatusFilter = ({ value: status, onChange }) => {
-  //All
   const renderedFilters = Object.keys(StatusFilters).map((key) => {
-    const value = StatusFilters[key]; //All Active Completed
+    const value = StatusFilters[key];
     const handleClick = () => onChange(value);
     const className = value === status ? 'selected' : '';
 
@@ -50,7 +49,6 @@ const Footer = () => {
 
   const { status, dueDates } = useSelector((state) => state.filters);
 
-
   const onClearCompletedClicked = (e) => {
     e.preventDefault();
     dispatch(deleteAllLocalStorage());
@@ -73,7 +71,6 @@ const Footer = () => {
 
       <StatusFilter value={status} onChange={onStatusChange} />
       <RemainingTodos count={todosRemaining} />
-      {/* <ColorFilters value={colors} onChange={onColorChange} /> */}
     </div>
   );
 };

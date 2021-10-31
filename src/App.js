@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddTodoForm from './components/AddTodoForm';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import TodoList from './components/todos/TodoList';
 import List from './data';
@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     dispatch(deleteAll());
     dispatch(addAll(todoListFromLocalStorage));
-  }, [])
+  });
 
   return (
     <div
@@ -24,12 +24,10 @@ function App() {
         boxShadow: '0.1rem 0.1rem 0.4rem #aaaaaa',
       }}
     >
-      <Footer/>
+      <Footer />
       <h2> What's the Plan for Today </h2>
-
       <AddTodoForm />
       <TodoList />
-
     </div>
   );
 }

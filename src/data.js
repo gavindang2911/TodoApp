@@ -43,7 +43,7 @@ const List = {
   },
   removeAllList: () => {
     localStorage.clear();
-  }
+  },
 };
 
 export default List;

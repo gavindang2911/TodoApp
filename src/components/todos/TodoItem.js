@@ -1,13 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import List from '../../data';
-import { removeTodos, completeTodos, updateTodos, inProgressSelected } from '../../redux/reducer';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { removeTodos, updateTodos } from '../../redux/reducer';
 
 const availableStatus = ['To do', 'In Progress', 'Completed'];
 
 const TodoItem = ({ id, title, status, description, dueDate }) => {
   const dispatch = useDispatch();
-  const [isDisabled, setIsDisabled] = useState(false);
   const [todo, setTodo] = useState({
     id: id,
     title: title,
@@ -16,48 +15,35 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
     dueDate: dueDate,
   });
 
-
   const handleDeleteClick = () => {
     dispatch(removeTodos({ id: id }));
   };
 
-  // const handleCompleClick = () => {
-  //   dispatch(completeTodos({ id, status: 'Completed' }));
-  // };
-
   const update = () => {
-
-    // if (e.which === 13) {
-    //   e.preventDefault();
-    //   //here 13 is key code for enter key
-    //   setIsDisabled(!isDisabled);
-    //   dispatch(updateTodos({ id: id, todo: todo }));
-
-    // }
-    // setIsDisabled(!isDisabled);
-      dispatch(updateTodos({ id: id, todo: todo }));
+    alert('Updated Successfully');
+    dispatch(updateTodos({ id: id, todo: todo }));
   };
   const handleStatusChanged = (e) => {
     const status = e.target.value;
-    setTodo({...todo, status: status})
-    dispatch(updateTodos({ id: id, todo: {...todo, status: status }}));
-  }
+    setTodo({ ...todo, status: status });
+    dispatch(updateTodos({ id: id, todo: { ...todo, status: status } }));
+  };
 
   const statusOptions = availableStatus.map((status) => (
     <option key={status} value={status}>
       {status}
     </option>
-  ))
+  ));
 
   return (
-    //zsffffffffffffffffffffffffffffffffffffffffffffffffff
     <li
-      className={`list-group-item ${status==='In Progress' ?'list-group-item-primary':''}${status==='Completed' ? 'list-group-item-success':''} mb-3 mr-sm-2`}
+      className={`list-group-item ${
+        status === 'In Progress' ? 'list-group-item-primary' : ''
+      }${status === 'Completed' ? 'list-group-item-success' : ''} mb-3 mr-sm-2`}
     >
       <div className="d-flex justify-content-between">
         <textarea
           defaultValue={title}
-          disabled={isDisabled}
           style={{ border: 'none', background: 'transparent' }}
           onChange={(event) =>
             setTodo({
@@ -65,12 +51,9 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
               title: event.target.value,
             })
           }
-          // onKeyPress={(e) => update(e)}
         />
-        {/* <textarea style={{ border:"none" }}>{title}</textarea> */}
         <textarea
           defaultValue={description}
-          disabled={isDisabled}
           style={{ border: 'none', background: 'transparent' }}
           onChange={(event) =>
             setTodo({
@@ -78,17 +61,14 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
               description: event.target.value,
             })
           }
-          // onKeyPress={(e) => update(e)}
         />
 
         <div>
           <select
             value={todo.status}
-            // style={{ color }}
             onChange={handleStatusChanged}
             style={{ marginRight: '10px' }}
           >
-            {/* <option value=""></option> */}
             {statusOptions}
           </select>
           <button
@@ -98,13 +78,6 @@ const TodoItem = ({ id, title, status, description, dueDate }) => {
           >
             Update
           </button>
-          {/* <button
-            className="btn btn-primary"
-            style={{ marginRight: '10px' }}
-            onClick={handleCompleClick}
-          >
-            Done
-          </button> */}
           <button className="btn btn-danger" onClick={handleDeleteClick}>
             Delete
           </button>

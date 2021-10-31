@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import List from '../data';
 
 export const StatusFilters = {
   All: 'all',
   Active: 'active',
   Completed: 'completed',
-  Inprogress: 'inprogress'
+  Inprogress: 'inprogress',
 };
 
 const filterSlice = createSlice({
@@ -29,7 +28,6 @@ const filterSlice = createSlice({
       switch (changeType) {
         case 'added': {
           if (dueDates.includes(dueDate)) {
-            // This color already is set as a filter. Don't change the state.
             return state;
           }
 
